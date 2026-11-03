@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CORRE, NEGAN — Endless Runner 3D en Unity WebGL</title>
+  <meta name="description" content="Endless runner 3D hecho en Unity. Negan escapa de Freddy por una ciudad abandonada: salta, agáchate y sobrevive un nivel más. Juega directo en el navegador.">
+  <meta property="og:title" content="CORRE, NEGAN — Endless Runner 3D">
+  <meta property="og:description" content="Salta. Agáchate. No mires atrás. Juega en el navegador.">
+  <meta property="og:image" content="assets/og.jpg">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0b0a09">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <!-- ============ 1. ENCABEZADO ============ -->
+  <header class="nav" id="top">
+    <div class="wrap nav__row">
+      <a class="brand" href="#top" aria-label="CORRE, NEGAN — inicio">
+        <span class="brand__mark" aria-hidden="true">N</span>
+        <span class="brand__txt">
+          <strong>CORRE, NEGAN</strong>
+          <small>ENDLESS RUNNER 3D</small>
+        </span>
+      </a>
+      <button class="nav__toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav id="menu" class="nav__links" aria-label="Principal">
+        <a href="#historia">Historia</a>
+        <a href="#personaje">Personaje</a>
+        <a href="#mecanicas">Mecánicas</a>
+        <a href="#datos">Datos</a>
+        <a class="btn btn--sm" href="#jugar" data-play>Jugar ahora</a>
+      </nav>
+    </div>
+    <div class="nav__progress" id="progress"></div>
+  </header>
+
+  <main>
+    <!-- ============ 2. SECCIÓN PRINCIPAL ============ -->
+    <section class="hero wrap">
+      <div class="hero__copy">
+        <p class="eyebrow"><span class="eyebrow__bar"></span>ENDLESS RUNNER 3D&nbsp;/&nbsp;UNITY WEBGL</p>
+        <h1 class="title">
+          <span class="title__a">CORRE,</span>
+          <span class="title__b">NEGAN<i>.</i></span>
+        </h1>
+        <p class="lead">Salta. Agáchate. No mires atrás.</p>
+        <p class="sub">En una ciudad muerta, un oso mecánico acaba de despertar con hambre de presas. Cada segundo que sobrevives, Freddy se acerca un paso más. Dos movimientos, un tropiezo perdonado y una sola misión: aguantar un nivel más.</p>
+
+        <div class="cta">
+          <a class="btn btn--big" href="#jugar" data-play>
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
+            JUGAR AHORA
+          </a>
+          <a class="btn btn--ghost btn--big" href="#historia">
+            CONOCE LA HISTORIA
+            <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          </a>
+        </div>
+
+        <ul class="metrics" aria-label="Métricas rápidas">
+          <li><b>100</b><span>puntos = 1 nivel</span></li>
+          <li><b>1</b><span>tropiezo perdonado</span></li>
+          <li>
+            <b class="keys"><kbd>␣</kbd><kbd>S</kbd></b><span>saltar · agacharse</span>
+          </li>
+        </ul>
+      </div>
+
+      <figure class="hero__art">
+        <img src="assets/hero.jpg" width="1200" height="1400" alt="Negan, con su bate de alambre de púas, corre por una ciudad en ruinas mientras Freddy lo observa desde atrás." fetchpriority="high">
+        <figcaption class="tag tag--cap">
+          <span>SUJETO&nbsp;001</span>
+          <strong>NEGAN · SOBREVIVIENTE</strong>
+        </figcaption>
+        <div class="tag tag--side" aria-hidden="true"><i></i>PERSEGUIDOR ACTIVO</div>
+      </figure>
+    </section>
+
+    <!-- HUD en vivo -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track">
+        <span>NIVEL 01 · VELOCIDAD 9.0 · FREDDY A 1.8 M</span>
+        <span>NIVEL 04 · VELOCIDAD 13.2 · FREDDY A 1.35 M</span>
+        <span>NIVEL 07 · VELOCIDAD 17.4 · FREDDY A 0.9 M</span>
+        <span>NIVEL 10 · VELOCIDAD 21.6 · NO HAY SALIDA</span>
+        <span>NIVEL 01 · VELOCIDAD 9.0 · FREDDY A 1.8 M</span>
+        <span>NIVEL 04 · VELOCIDAD 13.2 · FREDDY A 1.35 M</span>
+        <span>NIVEL 07 · VELOCIDAD 17.4 · FREDDY A 0.9 M</span>
+        <span>NIVEL 10 · VELOCIDAD 21.6 · NO HAY SALIDA</span>
+      </div>
+    </div>
+
+    <!-- ============ 3. HISTORIA ============ -->
+    <section class="sec wrap" id="historia">
+      <header class="sec__head reveal">
+        <p class="sec__no">01</p>
+        <div>
+          <h2>La historia</h2>
+          <p class="sec__kicker">Un mundo sin reglas, salvo una: quien se detiene, pierde.</p>
+        </div>
+      </header>
+
+      <div class="story">
+        <article class="chapter reveal">
+          <p class="chapter__n">ACTO I</p>
+          <h3>La ciudad en silencio</h3>
+          <p>Nadie recuerda el año exacto en que se apagaron las luces. Los semáforos quedaron muertos, los carteles se oxidaron y el asfalto se llenó de grietas y musgo. En esa ciudad vacía, Negan recorre calles que ya no tienen dueño, con su bate de alambre de púas al hombro, buscando lo único que queda por conseguir: una noche más con vida.</p>
+        </article>
+
+        <article class="chapter chapter--red reveal">
+          <p class="chapter__n">ACTO II</p>
+          <h3>Algo despertó</h3>
+          <p>En el sótano de una vieja pizzería, un animatrónico olvidado detecta movimiento después de años de inactividad. Sus ojos se encienden. Freddy no corre como una persona: devora la distancia a pasos enormes, y su sistema solo conoce una orden, alcanzar al intruso. Negan escucha el metal crujir detrás de él y entiende que ya no hay tiempo de pelear.</p>
+        </article>
+
+        <article class="chapter reveal">
+          <p class="chapter__n">ACTO III</p>
+          <h3>La carretera que no termina</h3>
+          <p>No hay refugio ni meta al final del camino. La autopista se repite, y cada vez que Negan cruza otros cien metros la ciudad cambia de ritmo: el suelo pasa más rápido, los obstáculos aparecen más juntos y Freddy se acerca un poco más. La única forma de salir adelante es resistir más que la última vez.</p>
+        </article>
+      </div>
+
+      <aside class="quote reveal">
+        <p class="quote__tape" aria-hidden="true"></p>
+        <blockquote>
+          <p>«Negan no corre por heroísmo. Corre porque en su mundo hay una sola ley: el que se detiene, pierde.»</p>
+        </blockquote>
+        <p class="quote__why"><b>Objetivo del jugador:</b> sobrevivir nivel tras nivel y superar su propio récord antes de que Freddy lo alcance.</p>
+      </aside>
+    </section>
+
+    <!-- ============ 4. PERSONAJE ============ -->
+    <section class="sec sec--dark" id="personaje">
+      <div class="wrap">
+        <header class="sec__head reveal">
+          <p class="sec__no">02</p>
+          <div>
+            <h2>Los personajes</h2>
+            <p class="sec__kicker">Uno corre. El otro no se cansa.</p>
+          </div>
+        </header>
+
+        <div class="chars">
+          <article class="char char--hero reveal">
+            <div class="char__img">
+              <img src="assets/negan.webp" loading="lazy" width="560" height="1100" alt="Render 3D de Negan: chaqueta de cuero negra, barba canosa, botas militares y bate de alambre de púas.">
+            </div>
+            <div class="char__body">
+              <p class="chip">PROTAGONISTA · JUGADOR</p>
+              <h3>Negan</h3>
+              <p class="char__desc">Un sobreviviente curtido que sabe que detenerse significa morir. No pelea contra Freddy: lo esquiva. Su fuerza no está en el bate, sino en leer el camino a tiempo.</p>
+
+              <h4>Habilidades</h4>
+              <ul class="skills">
+                <li><b>Salto variable</b> Mantén la tecla para saltar más alto; suéltala para un salto corto.</li>
+                <li><b>Agacharse</b> Pasa por debajo de los obstáculos voladores altos.</li>
+                <li><b>Caída rápida</b> Si te agachas en el aire, caes más rápido para aterrizar a tiempo.</li>
+                <li><b>Aguantar un golpe</b> Puede tropezar una vez y seguir corriendo, con 1 s de invulnerabilidad.</li>
+              </ul>
+
+              <h4>Rasgos distintivos</h4>
+              <p class="traits"><span>Chaqueta de cuero negra</span><span>Barba canosa</span><span>Botas militares</span><span>Bate con alambre de púas</span></p>
+
+              <dl class="specs">
+                <div><dt>Modelo</dt><dd>3D · ~50 000 triángulos</dd></div>
+                <div><dt>Rig</dt><dd>Humanoide (Mixamo)</dd></div>
+                <div><dt>Animaciones</dt><dd>Correr · Saltar · Agacharse</dd></div>
+              </dl>
+            </div>
+          </article>
+
+          <article class="char char--foe reveal">
+            <div class="char__img">
+              <img src="assets/freddy.webp" loading="lazy" width="860" height="780" alt="Render 3D de Freddy, oso animatrónico desgastado con sombrero de copa y pajarita.">
+            </div>
+            <div class="char__body">
+              <p class="chip chip--red">ANTAGONISTA · PERSEGUIDOR</p>
+              <h3>Freddy</h3>
+              <p class="char__desc">Un oso animatrónico oxidado que despertó tras años de apagón. No se cansa, no se distrae y no negocia. Cada nivel que sube Negan, él se acerca un poco más.</p>
+              <ul class="bullets">
+                <li>Espera fuera de pantalla hasta que empieza la carrera.</li>
+                <li>Del nivel 1 al 7 se va acercando; desde ahí se queda pegado.</li>
+                <li>Si Negan tropieza, se lanza casi encima de él.</li>
+                <li>Si lo alcanza, termina la partida: <em>«¡Te atraparon!»</em></li>
+              </ul>
+              <dl class="specs">
+                <div><dt>Modelo</dt><dd>3D alta resolución</dd></div>
+                <div><dt>Movimiento</dt><dd>Rebote, balanceo e inclinación</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. MECÁNICAS ============ -->
+    <section class="sec wrap" id="mecanicas">
+      <header class="sec__head reveal">
+        <p class="sec__no">03</p>
+        <div>
+          <h2>Mecánicas y controles</h2>
+          <p class="sec__kicker">Solo dos acciones. Lo difícil es decidir cuándo.</p>
+        </div>
+      </header>
+
+      <h3 class="sub-h reveal">Esquema de control</h3>
+      <div class="controls reveal">
+        <div class="ctrl">
+          <div class="ctrl__keys"><kbd class="wide">ESPACIO</kbd><kbd>W</kbd><kbd>↑</kbd><kbd class="mouse">CLIC</kbd></div>
+          <h4>Saltar</h4>
+          <p>Mantén pulsado para saltar más alto. También empieza y reinicia la partida.</p>
+        </div>
+        <div class="ctrl">
+          <div class="ctrl__keys"><kbd>S</kbd><kbd>↓</kbd><kbd class="wide">CTRL</kbd></div>
+          <h4>Agacharse</h4>
+          <p>Reduce tu altura para pasar bajo los voladores. En el aire, te hace caer más rápido.</p>
+        </div>
+      </div>
+
+      <h3 class="sub-h reveal">Reglas del sistema</h3>
+      <div class="rules">
+        <article class="rule reveal">
+          <p class="rule__n">A</p>
+          <h4>Obstáculos</h4>
+          <ul>
+            <li><b>De suelo:</b> se esquivan saltando.</li>
+            <li><b>Voladores bajos:</b> también se saltan.</li>
+            <li><b>Voladores altos:</b> hay que agacharse.</li>
+            <li>Los grandes y los voladores aparecen cuando el puntaje sube.</li>
+          </ul>
+        </article>
+        <article class="rule reveal">
+          <p class="rule__n">B</p>
+          <h4>Niveles</h4>
+          <ul>
+            <li>Cada <b>100 puntos</b> subes de nivel.</li>
+            <li>Sube la velocidad, los obstáculos salen más seguidos y Freddy se acerca.</li>
+            <li>El espacio entre obstáculos siempre deja margen para saltar: nunca es imposible.</li>
+          </ul>
+        </article>
+        <article class="rule reveal">
+          <p class="rule__n">C</p>
+          <h4>Tropiezo</h4>
+          <ul>
+            <li>El <b>primer choque</b> no te elimina: tropiezas y parpadeas 1 segundo.</li>
+            <li>Freddy salta casi encima de ti.</li>
+            <li>Si chocas de nuevo mientras sigue pegado, pierdes.</li>
+            <li>Poco a poco se vuelve a alejar.</li>
+          </ul>
+        </article>
+        <article class="rule rule--win reveal">
+          <p class="rule__n">D</p>
+          <h4>Victoria y derrota</h4>
+          <ul>
+            <li><b class="y">Se gana</b> superando tu récord (HI): la partida no tiene final.</li>
+            <li><b class="r">Se pierde</b> si Freddy te alcanza o si chocas dos veces seguidas.</li>
+            <li>No hay objetos que recolectar: solo velocidad y reflejos.</li>
+            <li>Tu récord se guarda en tu navegador.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 6. DATOS ============ -->
+    <section class="sec sec--dark" id="datos">
+      <div class="wrap">
+        <header class="sec__head reveal">
+          <p class="sec__no">04</p>
+          <div>
+            <h2>Datos e infografía</h2>
+            <p class="sec__kicker">Los números reales del juego, nivel por nivel.</p>
+          </div>
+        </header>
+
+        <div class="cards reveal">
+          <article class="stat"><b data-count="100">100</b><span>puntos por nivel</span></article>
+          <article class="stat"><b>9<small>→</small>22</b><span>velocidad inicial → máxima</span></article>
+          <article class="stat"><b data-count="1">1</b><span>tropiezo perdonado</span></article>
+          <article class="stat"><b data-count="7">7</b><span>niveles en que Freddy se acerca</span></article>
+          <article class="stat"><b data-count="3">3</b><span>animaciones de Negan</span></article>
+          <article class="stat"><b>60</b><span>FPS objetivo</span></article>
+        </div>
+
+        <div class="lab reveal">
+          <div class="lab__chart">
+            <h3>Dificultad por nivel</h3>
+            <div id="chart" role="img" aria-label="Gráfico: la velocidad sube de 9 a 22 entre los niveles 1 y 10, y la distancia de Freddy baja de 1.8 a 0.9 entre los niveles 1 y 7."></div>
+            <p class="legend"><span class="lg lg--y"></span> Velocidad del mundo <span class="lg lg--r"></span> Distancia de Freddy (menos = más peligro)</p>
+          </div>
+
+          <div class="lab__sim">
+            <h3>Simulador de nivel</h3>
+            <label for="lvl">Nivel: <output id="o-lvl">1</output></label>
+            <input id="lvl" type="range" min="1" max="12" value="1" step="1">
+            <div class="track" id="track" aria-hidden="true">
+              <div class="track__road"></div>
+              <div class="track__freddy" id="s-freddy">F</div>
+              <div class="track__negan" id="s-negan">N</div>
+            </div>
+            <dl class="readout">
+              <div><dt>Puntaje necesario</dt><dd id="o-pts">0</dd></div>
+              <div><dt>Velocidad</dt><dd id="o-speed">9.0</dd></div>
+              <div><dt>Freddy a</dt><dd id="o-dist">1.80</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 7. JUGAR AHORA ============ -->
+    <section class="sec wrap" id="jugar">
+      <header class="sec__head reveal">
+        <p class="sec__no">05</p>
+        <div>
+          <h2>Jugar ahora</h2>
+          <p class="sec__kicker">Corre directo en tu navegador. Sin instalar nada.</p>
+        </div>
+      </header>
+
+      <div class="player reveal" id="player">
+        <div class="player__poster" id="poster">
+          <img src="assets/hero.jpg" alt="" aria-hidden="true">
+          <div class="player__center">
+            <button class="btn btn--big" id="start" type="button">
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path d="M7 4l13 8-13 8z" fill="currentColor"/></svg>
+              INICIAR PARTIDA
+            </button>
+            <p>La primera carga puede tardar unos segundos mientras se descarga el juego.</p>
+          </div>
+        </div>
+        <iframe id="game" title="CORRE, NEGAN — juego en Unity WebGL" data-src="juego/index.html" allow="fullscreen; autoplay" allowfullscreen loading="lazy"></iframe>
+      </div>
+
+      <div class="player__bar">
+        <button class="btn btn--ghost btn--sm" id="fs" type="button">Pantalla completa</button>
+        <a class="btn btn--ghost btn--sm" href="juego/index.html" target="_blank" rel="noopener">Abrir en pestaña nueva</a>
+        <span class="player__hint">Haz clic dentro del juego antes de usar el teclado.</span>
+      </div>
+
+      <div class="req">
+        <article>
+          <h3>Requerimientos mínimos</h3>
+          <ul>
+            <li>Computadora de escritorio o laptop con teclado.</li>
+            <li>Chrome, Edge o Firefox actualizados, con <b>WebGL 2.0</b> activo.</li>
+            <li>4 GB de RAM libres recomendados y conexión estable para la primera carga.</li>
+            <li>No está pensado para celulares: la acción de agacharse necesita teclado.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Si algo falla</h3>
+          <ul>
+            <li>Activa la <b>aceleración por hardware</b> en el navegador.</li>
+            <li>Cierra pestañas pesadas y recarga con <kbd>Ctrl</kbd> + <kbd>F5</kbd>.</li>
+            <li>Si el juego queda en negro, ábrelo en pestaña nueva.</li>
+            <li>La primera partida empieza al presionar <kbd>Espacio</kbd>.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="stripe" aria-hidden="true"></div>
+    <div class="wrap foot__row">
+      <div>
+        <p class="foot__brand">CORRE, NEGAN</p>
+        <p>Proyecto académico de Game Development · Universidad Privada del Valle.<br>Desarrollado por Dustin Fernando Vaca Aguilar con Unity y publicado con GitHub Pages.</p>
+      </div>
+      <p class="foot__legal">Proyecto educativo sin fines de lucro. Los personajes pertenecen a sus respectivos titulares (Negan © AMC / Skybound; Freddy Fazbear © Scott Cawthon) y se usan solo con fines académicos. Animaciones de Mixamo.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
